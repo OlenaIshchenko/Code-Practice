@@ -1,0 +1,35 @@
+package org.prog.airport;
+
+import java.util.HashMap;
+
+public class Plane {
+
+    private final String flightId;
+    private String flightDestination;
+    private final HashMap<String, Passenger> passengers;
+
+    public Plane(String flightId){
+        this.flightId = flightId;
+        passengers = new HashMap<>();
+    }
+    public String getFlightId() {
+        return flightId;
+    }
+
+    public void setFlightDestination(String destination){
+        flightDestination = destination;
+    }
+
+
+    public void boardPassenger(Passenger passenger) {
+        if(passengers.containsKey(passenger.getSitId())) {
+            //TODO: sit is taken
+            System.out.println("Offering a new sit for " + passenger.getName());
+            String replacementSit = passenger.getSitId() + "R";
+            passenger.setSitId(replacementSit);
+            boardPassenger(passenger);
+        } else {
+            System.out.println("Boarding done for " + passenger.getName() + " on flight " + flightId + "to " + flightDestination);
+            passengers.put(passenger.getSitId(), passenger);
+        }
+
